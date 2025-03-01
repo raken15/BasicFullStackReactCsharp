@@ -5,6 +5,7 @@ A full-stack web application demonstrating a basic integration between a C# Web 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Demo Showcase](#demo-showcase)
 - [Prerequisites](#prerequisites)
 - [Installation & Setup](#installation--setup)
   - [Backend Setup](#backend-setup)
@@ -21,6 +22,12 @@ A full-stack web application demonstrating a basic integration between a C# Web 
 - A `MessagesController` API endpoint that retrieves all messages.
 - CORS configuration to enable communication between the backend and the frontend.
 - A React component that sends a GET request to the API upon clicking a button.
+
+## Demo Showcase
+
+![BasicFullStackReactCsharp-Run-Setup](Demo-Clips/BasicFullStackReactCsharp-Run-Setup.gif)
+![BasicFullStackReactCsharp-Going-To-URL](Demo-Clips/BasicFullStackReactCsharp-Going-To-URL.gif)
+![BasicFullStackReactCsharp-Showcase-Fetch-Data-From-Backend](Demo-Clips/BasicFullStackReactCsharp-Showcase-Fetch-Data-From-Backend.gif)
 
 ## Prerequisites
 
