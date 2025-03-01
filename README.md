@@ -58,9 +58,9 @@ A full-stack web application demonstrating a basic integration between a C# Web 
 
        npm install
 
-3. **Start the Development Server:**
+3. **Start the Client Development Environment:**
 
-       npm start
+       npm run dev
 
 4. **Access the App:**  
    The React application will run on `http://localhost:5173/`.
