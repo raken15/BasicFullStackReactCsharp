@@ -23,6 +23,10 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      strict: true,
+      'no-unused-locals': true,
+      'no-unused-vars': true, // equivalent to noUnusedParameters
+      'no-fallthrough': true, // equivalent to noFallthroughCasesInSwitch
     },
   },
 )
