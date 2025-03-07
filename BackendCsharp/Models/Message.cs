@@ -4,7 +4,9 @@ namespace BackendCsharp.Models;
 
 public class Message
 {
-    [Required]
-    public required string Text { get; set; }
-    public DateTime CreatedAt { get; set; }
+    [Key]
+    public int Id { get; set; }
+    [Required(ErrorMessage = "The message text is required.")]
+    public string Text { get; set; } = string.Empty;
+    public DateTime? CreatedAt { get; set; } = DateTime.Now;
 }
