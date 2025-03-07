@@ -16,7 +16,7 @@ export const useApi = () => {
     const getSingleMessage = async (id: number): Promise<Message> => {
         const response = await fetch(`${API_BASE_URL}/messages/${id}`);
         if (!response.ok) {
-            throw new Error("Failed to fetch single message");
+            throw new Error(`Failed to fetch single message for id: ${id}`);
         }
         return response.json();
     };
@@ -30,7 +30,7 @@ export const useApi = () => {
             body: JSON.stringify(newMessage)
         });
         if (!response.ok) {
-            throw new Error("Failed to create message");
+            throw new Error("Failed to create new message");
         }
         return response.json();
     };
@@ -44,7 +44,7 @@ export const useApi = () => {
             body: JSON.stringify(modifiedMessage)
         });
         if (!response.ok) {
-            throw new Error("Failed to update message");
+            throw new Error(`Failed to update message for id: ${id}`);
         }
         return response.json();
     };
