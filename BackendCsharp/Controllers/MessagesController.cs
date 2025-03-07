@@ -27,7 +27,7 @@ public class MessagesController : ControllerBase
     [HttpPost]
     public IActionResult PostMessage([FromBody] string message)
     {
-        _messages.AddMessage(new Message { Text = message, CreatedAt = DateTime.Now });
+        _messages.AddMessage(new Message { Text = message, CreatedDate = DateTime.Now });
         return CreatedAtAction(nameof(GetMessage), new { id = _messages.Count - 1 }, message);
     }
     [HttpPut("{id}")]

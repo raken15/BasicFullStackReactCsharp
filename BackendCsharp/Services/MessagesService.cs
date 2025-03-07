@@ -8,8 +8,8 @@ public class MessagesService : IMessagesService
 
     public MessagesService()
     {
-        _messages.Add(new Message { Text = "Hello from C#", CreatedAt = DateTime.Now });
-        _messages.Add(new Message { Text = "Welcome to React and Csharp", CreatedAt = DateTime.Now });
+        _messages.Add(new Message { Id = 0, Text = "Hello from C#", CreatedDate = DateTime.Now });
+        _messages.Add(new Message { Id = 1, Text = "Welcome to React and Csharp", CreatedDate = DateTime.Now });
     }
 
     public int Count => _messages.Count;

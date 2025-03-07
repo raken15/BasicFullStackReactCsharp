@@ -8,5 +8,5 @@ public class Message
     public int Id { get; set; }
     [Required(ErrorMessage = "The message text is required.")]
     public string Text { get; set; } = string.Empty;
-    public DateTime? CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? CreatedDate { get; set; } = DateTime.Now;
 }
