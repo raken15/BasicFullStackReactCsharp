@@ -2,7 +2,7 @@ using BackendCsharp.Models;
 
 namespace BackendCsharp.Services;
 
-public class MessagesService
+public class MessagesService : IMessagesService
 {
     private List<Message> _messages = new List<Message>();
 
