@@ -12,6 +12,8 @@ public class MessagesService : IMessagesService
         _messages.Add(new Message { Text = "Welcome to React and Csharp", CreatedAt = DateTime.Now });
     }
 
+    public int Count => _messages.Count;
+
     public IEnumerable<Message> GetAllMessages()
     {
         return _messages;
