@@ -15,31 +15,31 @@ public class MessagesController : ControllerBase
     }
     // private List<string> _messages = new List<string> { "Hello from C#", "Welcome to React and Csharp" };
     [HttpGet]
-    public IActionResult GetAllMessages()
+    public async Task<IActionResult> GetAllMessagesAsync()
     {
-        return Ok(_messages.GetAllMessages());
+        return Ok( await _messages.GetAllMessagesAsync());
     }
     [HttpGet("{id}")]
-    public IActionResult GetMessage(int id)
+    public async Task<IActionResult> GetMessageAsync(int id)
     {
-        return Ok(_messages.GetMessage(id));
+        return Ok( await _messages.GetMessageAsync(id));
     }
     [HttpPost]
-    public IActionResult PostMessage([FromBody] string message)
+    public async Task<IActionResult> AddMessageAsync([FromBody] string message)
     {
-        _messages.AddMessage(new Message { Text = message, CreatedDate = DateTime.Now });
-        return CreatedAtAction(nameof(GetMessage), new { id = _messages.Count - 1 }, message);
+        await _messages.AddMessageAsync(new Message { Text = message, CreatedDate = DateTime.Now });
+        return CreatedAtAction(nameof(GetMessageAsync), new { id = _messages.Count - 1 }, message);
     }
     [HttpPut("{id}")]
-    public IActionResult PutMessage(int id, [FromBody] Message message)
+    public async Task<IActionResult> PutMessageAsync(int id, [FromBody] Message message)
     {
-        _messages.UpdateMessage(id, message);
+        await _messages.UpdateMessageAsync(id, message);
         return NoContent();
     }
     [HttpDelete("{id}")]
-    public IActionResult DeleteMessage(int id)
+    public async Task<IActionResult> DeleteMessageAsync(int id)
     {
-        _messages.DeleteMessage(id);
+        await _messages.DeleteMessageAsync(id);
         return NoContent();
     }
 }

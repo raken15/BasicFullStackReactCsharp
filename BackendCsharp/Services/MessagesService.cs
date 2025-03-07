@@ -14,28 +14,30 @@ public class MessagesService : IMessagesService
 
     public int Count => _messages.Count;
 
-    public IEnumerable<Message> GetAllMessages()
+    public async Task<IEnumerable<Message>> GetAllMessagesAsync()
     {
-        return _messages;
+        return await Task.Run(() => _messages);
     }
 
-    public Message GetMessage(int id)
+    public async Task<Message> GetMessageAsync(int id)
     {
-        return _messages[id];
+        return await Task.Run(() =>_messages[id]);
     }
 
-    public void AddMessage(Message message)
+    public async Task AddMessageAsync(Message message)
     {
-        _messages.Add(message);
+        await Task.Run(() => _messages.Add(message));
     }
 
-    public void UpdateMessage(int id, Message message)
+    public async Task UpdateMessageAsync(int id, Message message)
     {
-        _messages[id] = message;
+        await Task.Run(() => {
+            _messages[id].Text = message.Text;
+        });
     }
 
-    public void DeleteMessage(int id)
+    public async Task DeleteMessageAsync(int id)
     {
-        _messages.RemoveAt(id);
+        await Task.Run(() => _messages.RemoveAt(id));
     }
 }
