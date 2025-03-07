@@ -21,7 +21,7 @@ export const useApi = () => {
         return response.json();
     };
     // POST: Create a new message
-    const createMessage = async (newMessage: Partial<Message>): Promise<Message> => {
+    const addMessage = async (newMessage: Partial<Message>): Promise<Message> => {
         const response = await fetch(`${API_BASE_URL}/messages`, {
             method: "POST",
             headers: {
@@ -30,7 +30,7 @@ export const useApi = () => {
             body: JSON.stringify(newMessage)
         });
         if (!response.ok) {
-            throw new Error("Failed to create new message");
+            throw new Error("Failed to add new message");
         }
         return response.json();
     };
@@ -59,5 +59,5 @@ export const useApi = () => {
         return response.json();
     };
 
-    return { getAllMessages, getSingleMessage, createMessage, updateMessage, deleteMessage };
+    return { getAllMessages, getSingleMessage, addMessage, updateMessage, deleteMessage };
 };
