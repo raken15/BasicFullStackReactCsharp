@@ -13,7 +13,6 @@ public class MessagesController : ControllerBase
     {
         _messages = messages;
     }
-    // private List<string> _messages = new List<string> { "Hello from C#", "Welcome to React and Csharp" };
     [HttpGet]
     public async Task<IActionResult> GetAllMessagesAsync()
     {
