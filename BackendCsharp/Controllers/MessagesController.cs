@@ -19,16 +19,25 @@ public class MessagesController : ControllerBase
     {
         return Ok( await _messages.GetAllMessagesAsync());
     }
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}", Name = "GetMessageById")]
     public async Task<IActionResult> GetMessageAsync(int id)
     {
-        return Ok( await _messages.GetMessageAsync(id));
+        var message = await _messages.GetSingleMessageAsync(id);
+        if (message == null)
+        {
+            return NotFound();
+        }
+        return Ok(message);
     }
     [HttpPost]
     public async Task<IActionResult> AddMessageAsync([FromBody] Message message)
     {
+        if (message == null)
+        {
+            return BadRequest("Message cannot be null.");
+        }
         await _messages.AddMessageAsync(message);
-        return CreatedAtAction(nameof(GetMessageAsync), new { id = _messages.Count - 1 }, message.Text);
+        return CreatedAtRoute("GetMessageById", new { id = message.Id }, message);
     }
     [HttpPut("{id}")]
     public async Task<IActionResult> PutMessageAsync(int id, [FromBody] Message message)
