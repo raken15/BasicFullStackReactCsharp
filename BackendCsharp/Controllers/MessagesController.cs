@@ -25,10 +25,10 @@ public class MessagesController : ControllerBase
         return Ok( await _messages.GetMessageAsync(id));
     }
     [HttpPost]
-    public async Task<IActionResult> AddMessageAsync([FromBody] string message)
+    public async Task<IActionResult> AddMessageAsync([FromBody] Message message)
     {
-        await _messages.AddMessageAsync(new Message { Text = message, CreatedDate = DateTime.Now });
-        return CreatedAtAction(nameof(GetMessageAsync), new { id = _messages.Count - 1 }, message);
+        await _messages.AddMessageAsync(message);
+        return CreatedAtAction(nameof(GetMessageAsync), new { id = _messages.Count - 1 }, message.Text);
     }
     [HttpPut("{id}")]
     public async Task<IActionResult> PutMessageAsync(int id, [FromBody] Message message)
