@@ -5,7 +5,7 @@ namespace BackendCsharp.Services;
 public class MessagesService : IMessagesService
 {
     private List<Message> _messages = new List<Message>();
-    private int _nextId = 3;
+    private int _nextId = 2;
 
     public MessagesService()
     {
@@ -20,7 +20,7 @@ public class MessagesService : IMessagesService
         return await Task.Run(() => _messages);
     }
 
-    public async Task<Message> GetMessageAsync(int id)
+    public async Task<Message> GetSingleMessageAsync(int id)
     {
         var message = FindMessage(id);
 
@@ -32,16 +32,11 @@ public class MessagesService : IMessagesService
     public async Task AddMessageAsync(Message message)
     {
         VerifyMessage(message);
-
-        var messageToAdd = new Message
-        {
-            Id = Interlocked.Increment(ref _nextId), // Ensures thread-safe increment
-            Text = message.Text,
-            CreatedDate = DateTime.UtcNow // Ensures time zone consistency
-        };
+        message.Id = Interlocked.Increment(ref _nextId); // Ensures thread-safe increment
+        message.CreatedDate = DateTime.UtcNow; // Ensures time zone consistency
 
         // Adding to the list is fast and doesn't require async/await
-        _messages.Add(messageToAdd);
+        _messages.Add(message);
 
         // Simulate async delay only if needed (e.g., database call)
         await Task.CompletedTask;

@@ -5,7 +5,7 @@ public interface IMessagesService
 {
     int Count { get; }
     Task<IEnumerable<Message>> GetAllMessagesAsync();
-    Task<Message> GetMessageAsync(int id);
+    Task<Message> GetSingleMessageAsync(int id);
     Task AddMessageAsync(Message message);
     Task UpdateMessageAsync(int id, Message message);
     Task DeleteMessageAsync(int id);
