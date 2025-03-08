@@ -1,9 +1,13 @@
 using BackendCsharp.Services;
+using BackendCsharp.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<MessagesExceptionFilter>();
+});
 builder.Services.AddSingleton<IMessagesService, MessagesService>();
 builder.Services.AddSwaggerGen();
 
@@ -21,13 +25,14 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseRouting();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
