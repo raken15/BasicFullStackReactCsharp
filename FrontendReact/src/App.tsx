@@ -49,7 +49,7 @@ function App() {
       setFeedback(`Added message with id ${addedMessage.id}`);
       await handleGetAllMessages();
     } catch (error) {
-      setFeedback("Failed to fetch message.");
+      setFeedback("Error adding new message.");
     }
   };
 
@@ -79,16 +79,82 @@ function App() {
   };
 
   return (
-    <div>
+    <div style={{padding : "2rem"}}>
       <h1>Raviv's Vite + React + Typescript Frontend</h1>
       {feedback && <p>{feedback}</p>}
       {/* Get All Messages */}
-      {/* <button onClick = {handleGetAllMessages}>Get All Messages</button> */}
+      <div style={{marginBottom: "1rem"}}>
+        <button onClick={handleGetAllMessages}>Get All Messages</button>
+      </div>
       {/* Get Message by ID */}
-      {/* <button onClick = {() => handleGetSingleMessage()}>Get Single Message</button> */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={messageId}
+          onChange={(e) => setMessageId(parseInt(e.target.value))}
+          />
+        <button onClick={() => handleGetSingleMessage()}>Get Single Message</button>
+        {
+          singleMessage && (
+            <div>
+              <h3>Message Details:</h3>
+              <p>ID: {singleMessage.id}</p>
+              <p>Text: {singleMessage.text}</p>
+              <p>Create Date: {singleMessage.createdDate.toString()}</p>
+            </div>
+          )
+        }
+      </div>
       {/* Add Message */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Enter new message text"
+          value={newMessageText}
+          onChange={(e) => setNewMessageText(e.target.value)}
+        />
+        <button onClick={() => handleAddMessage()}>Add Message</button>
+      </div>
       {/* Update Message */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={updateId}
+          onChange={(e) => setUpdateId(parseInt(e.target.value))}
+        />
+        <input
+          type="text"
+          placeholder="Enter message text for update"
+          value={updateText}
+          onChange={(e) => setUpdateText(e.target.value)}
+        />
+        <button onClick={() => handleUpdateMessage()}>Update Message</button>
+      </div>
       {/* Delete Message */}
+      <div style = {{marginBottom: "1rem"}}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={deleteId}
+          onChange={(e) => setDeleteId(parseInt(e.target.value))}
+        />
+        <button onClick={ () => handleDeleteMessage()}>Delete Message</button>
+      </div>
+      {/* Display All Messages */}
+      <div>
+        <h2>All Messages:</h2>
+        <ul>
+          {messages.map((message) => (
+            <li key={message.id}>
+              <p>ID: {message.id}</p>
+              <p>Text: {message.text}</p>
+              <p>Create Date: {message.createdDate.toString()}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
