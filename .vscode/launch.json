@@ -11,9 +11,9 @@
             // Indicates that VS Code should launch the application
             "request": "launch",
             // Path to the compiled backend DLL (update 'YourBackend.dll' as needed)
-            "program": "${workspaceFolder}/backend/bin/Debug/net8.0/YourBackend.dll",
+            "program": "${workspaceFolder}/BackendCsharp/bin/Debug/net8.0/BackendCsharp.dll",
             // Sets the current working directory for the backend application
-            "cwd": "${workspaceFolder}/backend",
+            "cwd": "${workspaceFolder}/BackendCsharp",
             // Environment variables to set for the backend process
             "env": {
                 // Sets the ASP.NET Core environment to Development for detailed error information
