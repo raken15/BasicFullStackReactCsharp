@@ -35,7 +35,7 @@ export const useApi = () => {
         return response.json();
     };
     // PUT: Update an existing message by ID
-    const updateMessage = async (id: number, modifiedMessage: Partial<Message>): Promise<Message> => {
+    const updateMessage = async (id: number, modifiedMessage: Partial<Message>): Promise<void> => {
         const response = await fetch(`${API_BASE_URL}/messages/${id}`, {
             method: "PUT",
             headers: {
@@ -46,17 +46,15 @@ export const useApi = () => {
         if (!response.ok) {
             throw new Error(`Failed to update message for id: ${id}`);
         }
-        return response.json();
     };
     // DELETE: Delete a message by ID
-    const deleteMessage = async (id: number): Promise<{ message: string }> => {
+    const deleteMessage = async (id: number): Promise<void> => {
         const response = await fetch(`${API_BASE_URL}/messages/${id}`, {
             method: "DELETE",
         });
         if (!response.ok) {
             throw new Error(`Failed to delete message with id ${id}`);
         }
-        return response.json();
     };
 
     return { getAllMessages, getSingleMessage, addMessage, updateMessage, deleteMessage };

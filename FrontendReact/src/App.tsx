@@ -31,9 +31,13 @@ function App() {
   // Handler for getting a single message
   const handleGetSingleMessage = async () => {
     try{
+      // clear messages
+      setMessages([]);
       const fetchedMessage = await getSingleMessage(messageId);
-      setSingleMessage(fetchedMessage);
+      setMessages([fetchedMessage]);
       setFeedback(`Fetched message with id ${messageId}`);
+      // clean input
+      setMessageId(0);
     }
     catch (error){
       setFeedback(`Error fetching message with id ${messageId}.`);
@@ -43,11 +47,14 @@ function App() {
   // Handler for creating a new message
   const handleAddMessage = async () => {
     try{
+      // clear messages
+      setMessages([]);
       // Note: createDate is not provided; backend will set it to the current date.
       const messageToAdd: Partial<Message> = { text: newMessageText };
       const addedMessage = await addMessage(messageToAdd);
       setFeedback(`Added message with id ${addedMessage.id}`);
-      await handleGetAllMessages();
+      // clean input
+      setNewMessageText("");
     } catch (error) {
       setFeedback("Error adding new message.");
     }
@@ -56,10 +63,13 @@ function App() {
   // Handler for updating a message
   const handleUpdateMessage = async () => {
     try{
+      // clear messages
+      setMessages([]);
       const messageToModify: Partial<Message> = { text: updateText};
-      const modifiedMessage = await updateMessage(updateId, messageToModify);
-      setFeedback(`updated message with id: ${modifiedMessage.id}`);
-      await handleGetAllMessages();
+      await updateMessage(updateId, messageToModify);
+      setFeedback(`updated message with id: ${updateId}`);
+      // clean input
+      setUpdateText("");
     }
     catch (error) {
       setFeedback(`Error updating message with id ${updateId}`);
@@ -69,9 +79,12 @@ function App() {
   // Handler for deleting a message
   const handleDeleteMessage = async () => {
     try{
-      const result = await deleteMessage(deleteId);
-      setFeedback(`Deleted message with id ${deleteId}: ${result.message}`);
-      await handleGetAllMessages();
+      // clear messages
+      setMessages([]);
+      await deleteMessage(deleteId);
+      setFeedback(`Deleted message with id ${deleteId}`);
+      // clean input
+      setDeleteId(0);
     }
     catch (error) {
       setFeedback(`Error deleting message with id ${deleteId}`);
@@ -144,7 +157,7 @@ function App() {
       </div>
       {/* Display All Messages */}
       <div>
-        <h2>All Messages:</h2>
+        <h2>Messages Displayed:</h2>
         <ul>
           {messages.map((message) => (
             <li key={message.id}>
