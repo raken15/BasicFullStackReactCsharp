@@ -69,6 +69,7 @@ function App() {
       await updateMessage(updateId, messageToModify);
       setFeedback(`updated message with id: ${updateId}`);
       // clean input
+      setUpdateId(0);
       setUpdateText("");
     }
     catch (error) {
