@@ -1,80 +1,176 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { useApi } from "./api/useApi";
+import { Message } from "./types/Message";
 
 function App() {
-  // Existing state for the counter
-  const [countUI, setCount] = useState(0);
+  // Destructure API methods from our custom hook
+  const { getAllMessages, getSingleMessage, addMessage, updateMessage, deleteMessage } = useApi();
+  // State management for messages and UI inputs
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [singleMessage, setSingleMessage] = useState<Message | null>(null);
+  const [messageId, setMessageId] = useState<number>(0);
+  const [newMessageText, setNewMessageText] = useState<string>("");
+  const [updateId, setUpdateId] = useState<number>(0);
+  const [updateText, setUpdateText] = useState<string>("");
+  const [deleteId, setDeleteId] = useState<number>(0);
+  const [feedback, setFeedback] = useState<string>("");
 
-  // New state for managing backend data
-  const [dataUI, setData] = useState<any>(null);
-  const [loadingUI, setLoading] = useState(false);
-  const [errorUI, setError] = useState("");
+  // Handler for getting all messages
+  const handleGetAllMessages = async () => {
+    try{
+      const messages = await getAllMessages();
+      setMessages(messages);
+      setFeedback(`Fetched all messages successfully.`);
+    }
+    catch (error)
+    {
+      setFeedback("Error fetching all messages.");
+    }
+  };
 
-  // Function to fetch data when the button is clicked
-  const fetchData = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      // Make the GET request to your C# backend endpoint
-      const response = await fetch("http://localhost:5194/api/messages");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const jsonData = await response.json();
-      setData(jsonData);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  // Handler for getting a single message
+  const handleGetSingleMessage = async () => {
+    try{
+      // clear messages
+      setMessages([]);
+      const fetchedMessage = await getSingleMessage(messageId);
+      setMessages([fetchedMessage]);
+      setFeedback(`Fetched message with id ${messageId}`);
+      // clean input
+      setMessageId(0);
+    }
+    catch (error){
+      setFeedback(`Error fetching message with id ${messageId}.`);
+    }
+  };
+
+  // Handler for creating a new message
+  const handleAddMessage = async () => {
+    try{
+      // clear messages
+      setMessages([]);
+      // Note: createDate is not provided; backend will set it to the current date.
+      const messageToAdd: Partial<Message> = { text: newMessageText };
+      const addedMessage = await addMessage(messageToAdd);
+      setFeedback(`Added message with id ${addedMessage.id}`);
+      // clean input
+      setNewMessageText("");
+    } catch (error) {
+      setFeedback("Error adding new message.");
+    }
+  };
+
+  // Handler for updating a message
+  const handleUpdateMessage = async () => {
+    try{
+      // clear messages
+      setMessages([]);
+      const messageToModify: Partial<Message> = { text: updateText};
+      await updateMessage(updateId, messageToModify);
+      setFeedback(`updated message with id: ${updateId}`);
+      // clean input
+      setUpdateId(0);
+      setUpdateText("");
+    }
+    catch (error) {
+      setFeedback(`Error updating message with id ${updateId}`);
+    }
+  };
+
+  // Handler for deleting a message
+  const handleDeleteMessage = async () => {
+    try{
+      // clear messages
+      setMessages([]);
+      await deleteMessage(deleteId);
+      setFeedback(`Deleted message with id ${deleteId}`);
+      // clean input
+      setDeleteId(0);
+    }
+    catch (error) {
+      setFeedback(`Error deleting message with id ${deleteId}`);
     }
   };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+    <div style={{padding : "2rem"}}>
       <h1>Raviv's Vite + React + Typescript Frontend</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {countUI}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      {feedback && <p>{feedback}</p>}
+      {/* Get All Messages */}
+      <div style={{marginBottom: "1rem"}}>
+        <button onClick={handleGetAllMessages}>Get All Messages</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-
-      {/* Button to trigger the GET request */}
-      {/* Disable the button if fetch is in progress */}
-      {/* to prevent multiple simultaneous requests */}
-      <button onClick={fetchData} disabled={loadingUI}>
-        {loadingUI ? "Processing request..." : "Fetch Data from Backend"}
-      </button>
-
-      {/* Display data or error message */}
+      {/* Get Message by ID */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={messageId}
+          onChange={(e) => setMessageId(parseInt(e.target.value))}
+          />
+        <button onClick={() => handleGetSingleMessage()}>Get Single Message</button>
+        {
+          singleMessage && (
+            <div>
+              <h3>Message Details:</h3>
+              <p>ID: {singleMessage.id}</p>
+              <p>Text: {singleMessage.text}</p>
+              <p>Create Date: {singleMessage.createdDate.toString()}</p>
+            </div>
+          )
+        }
+      </div>
+      {/* Add Message */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Enter new message text"
+          value={newMessageText}
+          onChange={(e) => setNewMessageText(e.target.value)}
+        />
+        <button onClick={() => handleAddMessage()}>Add Message</button>
+      </div>
+      {/* Update Message */}
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={updateId}
+          onChange={(e) => setUpdateId(parseInt(e.target.value))}
+        />
+        <input
+          type="text"
+          placeholder="Enter message text for update"
+          value={updateText}
+          onChange={(e) => setUpdateText(e.target.value)}
+        />
+        <button onClick={() => handleUpdateMessage()}>Update Message</button>
+      </div>
+      {/* Delete Message */}
+      <div style = {{marginBottom: "1rem"}}>
+        <input
+          type="number"
+          placeholder="Enter Message ID"
+          value={deleteId}
+          onChange={(e) => setDeleteId(parseInt(e.target.value))}
+        />
+        <button onClick={ () => handleDeleteMessage()}>Delete Message</button>
+      </div>
+      {/* Display All Messages */}
       <div>
-        {loadingUI ? (
-          <div>Loading...</div>
-        ) : errorUI ? (
-          <div>Error: {errorUI}</div>
-        ) : dataUI ? (
-          <pre>{JSON.stringify(dataUI, null, 2)}</pre>
-        ) : (
-          <div>No data loaded. Click the button to fetch data.</div>
-        )}
+        <h2>Messages Displayed:</h2>
+        <ul>
+          {messages.map((message) => (
+            <li key={message.id}>
+              <p>ID: {message.id}</p>
+              <p>Text: {message.text}</p>
+              <p>Created Date: {message.createdDate.toString()}</p>
+            </li>
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,51 @@
+{
+    // **Steps to debug**:
+    // first run the client using npm run dev
+    // then run debug for launching the firefox in debug mode and debugging both the frontend and the backend
+    // The port where Firefox is listening for remote debugging connections
+
+    // Specifies the version of the debug configuration schema
+    "version": "0.2.0",
+    // Array of individual debug configurations
+    "configurations": [
+        {
+            // Name shown in the Debug panel for the C# backend
+            "name": "C# Backend",
+            // Specifies the debugger type for .NET Core / .NET (coreclr)
+            "type": "coreclr",
+            // Indicates that VS Code should launch the application
+            "request": "launch",
+            // Path to the compiled backend DLL (update 'YourBackend.dll' as needed)
+            "program": "${workspaceFolder}/BackendCsharp/bin/Debug/net8.0/BackendCsharp.dll",
+            // Sets the current working directory for the backend application
+            "cwd": "${workspaceFolder}/BackendCsharp",
+            // Environment variables to set for the backend process
+            "env": {
+                // Sets the ASP.NET Core environment to Development for detailed error information
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            // Name shown in the Debug panel for attaching to Firefox (frontend)
+            "name": "Attach to Firefox (Vite + React)",
+            // Specifies the Firefox Debug Adapter
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:5173", // Vite React app URL
+            "webRoot": "${workspaceFolder}/FrontendReact", // Path to frontend code
+            "reAttach": true
+        }
+    ],
+    // Compound configurations allow you to launch multiple configurations simultaneously
+    "compounds": [
+        {
+            // The name of the compound configuration shown in the Debug panel
+            "name": "Debug Full Stack",
+            // List of configurations to launch together (both backend and frontend)
+            "configurations": [
+                "C# Backend",
+                "Attach to Firefox (Vite + React)"
+            ]
+        }
+    ]
+}
