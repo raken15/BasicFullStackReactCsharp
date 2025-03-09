@@ -1,4 +1,9 @@
 {
+    // **Steps to debug**:
+    // first run the client using npm run dev
+    // then run debug for launching the firefox in debug mode and debugging both the frontend and the backend
+    // The port where Firefox is listening for remote debugging connections
+
     // Specifies the version of the debug configuration schema
     "version": "0.2.0",
     // Array of individual debug configurations
@@ -25,23 +30,10 @@
             "name": "Attach to Firefox (Vite + React)",
             // Specifies the Firefox Debug Adapter
             "type": "firefox",
-            // Indicates that VS Code should attach to an already running Firefox instance
-            "request": "attach",
-            // The port where Firefox is listening for remote debugging connections
-            // To enable debugging using firefox:
-            // Open Firefox and type about:config in the address bar.
-            // Search for devtools.debugger.remote-enabled and ensure it is set to true.
-            // You might also check for a setting like devtools.debugger.remote-port (if available) to confirm the port number Firefox uses.
-            "port": 6000,
-            // Maps source map URLs to the corresponding local file paths
-            "pathMappings": [
-                {
-                    // The URL prefix that appears in source maps (commonly 'webpack:///')
-                    "url": "webpack:///",
-                    // The local path where your frontend source files reside
-                    "path": "${workspaceFolder}/FrontendReact/src"
-                }
-            ]
+            "request": "launch",
+            "url": "http://localhost:5173", // Vite React app URL
+            "webRoot": "${workspaceFolder}/FrontendReact", // Path to frontend code
+            "reAttach": true
         }
     ],
     // Compound configurations allow you to launch multiple configurations simultaneously
