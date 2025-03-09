@@ -150,7 +150,7 @@ function App() {
             <li key={message.id}>
               <p>ID: {message.id}</p>
               <p>Text: {message.text}</p>
-              <p>Create Date: {message.createdDate.toString()}</p>
+              <p>Created Date: {message.createdDate.toString()}</p>
             </li>
           ))}
         </ul>
