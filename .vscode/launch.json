@@ -28,6 +28,10 @@
             // Indicates that VS Code should attach to an already running Firefox instance
             "request": "attach",
             // The port where Firefox is listening for remote debugging connections
+            // To enable debugging using firefox:
+            // Open Firefox and type about:config in the address bar.
+            // Search for devtools.debugger.remote-enabled and ensure it is set to true.
+            // You might also check for a setting like devtools.debugger.remote-port (if available) to confirm the port number Firefox uses.
             "port": 6000,
             // Maps source map URLs to the corresponding local file paths
             "pathMappings": [
