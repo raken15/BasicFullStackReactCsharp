@@ -1,41 +1,59 @@
-# BasicFullStackReactCSharp
+# BasicFullStackReactCsharp
 
-A full-stack web application demonstrating a basic integration between a C# Web API and a React (TypeScript) frontend. The solution consists of two projects: **BackendCsharp** (C# API) and **FrontendReach** (React app). This sample app currently implements a `MessagesController` with CORS enabled to allow the frontend to fetch all messages via a button click.
+## Project Overview
+
+**BasicFullStackReactCsharp** is a full-stack web application that demonstrates a RESTful API for CRUD operations on a **Message** model.  
+The backend is built using C# with .NET 8.0 following the MVC architecture and utilizes an in-memory data service for rapid development and testing.  
+The frontend is developed with React, TypeScript, and Vite, and it leverages a custom `useApi` hook along with `useState` for handling asynchronous API requests using `fetch`.  
+CORS is configured to ensure secure cross-origin communication, and Swagger is used for interactive API documentation.
+
+---
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Demo Showcase](#demo-showcase)
-- [Prerequisites](#prerequisites)
-- [Installation & Setup](#installation--setup)
+- [Key Features](#key-features)
+- [Installation and Setup](#installation-and-setup)
+  - [Prerequisites](#prerequisites)
   - [Backend Setup](#backend-setup)
   - [Frontend Setup](#frontend-setup)
-- [CORS Configuration](#cors-configuration)
-- [API Endpoints](#api-endpoints)
 - [Usage](#usage)
+  - [CRUD Operation Buttons Explained](#crud-operation-buttons-explained)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
 - [License](#license)
+- [Contributing](#contributing)
 
-## Overview
-
-**BasicFullStackReactCSharp** is designed as a learning example for integrating a C# Web API backend with a React (TypeScript) frontend. Key features include:
-
-- A `MessagesController` API endpoint that retrieves all messages.
-- CORS configuration to enable communication between the backend and the frontend.
-- A React component that sends a GET request to the API upon clicking a button.
+---
 
 ## Demo Showcase
 
 ![BasicFullStackReactCsharp-Run-Setup](Demo-Clips/BasicFullStackReactCsharp-Run-Setup.gif)
 ![BasicFullStackReactCsharp-Going-To-URL](Demo-Clips/BasicFullStackReactCsharp-Going-To-URL.gif)
-![BasicFullStackReactCsharp-Showcase-Fetch-Data-From-Backend](Demo-Clips/BasicFullStackReactCsharp-Showcase-Fetch-Data-From-Backend.gif)
+![Showcase-CRUD-client-server](Demo-Clips/Showcase-CRUD-client-server.gif)
 
-## Prerequisites
+---
 
-- **.NET SDK 6.0** (or later) – for running the C# backend.
-- **Node.js** (with npm or yarn) – for installing and running the React frontend.
-- **Visual Studio Code** – recommended IDE for both C# and TypeScript development.
+## Key Features
 
-## Installation & Setup
+- **MVC Architecture:** Organizes the backend into Models, Views, and Controllers for a clean separation of concerns.
+- **Asynchronous Operations:** All methods are implemented asynchronously using `fetch` on both the backend and frontend, ensuring a responsive user experience.
+- **In-Memory Data Service:** Provides a lightweight and fast data store ideal for development and demos.
+- **Custom useApi Hook:** Located in `useApi.ts`, it simplifies API communication by managing asynchronous requests and state using `useState`.
+- **CORS Enabled:** Ensures secure cross-origin requests between the client and server.
+- **Swagger Documentation:** Offers interactive API documentation to facilitate testing and development.
+- **Vite-Powered Frontend:** Enables rapid development, hot module replacement, and optimized builds.
+
+---
+
+## Installation and Setup
+
+### Prerequisites
+
+- **.NET 8.0 SDK:** [Download here](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **Node.js (v16 or later):** [Download here](https://nodejs.org/)
+- **Visual Studio Code**
+- **Git**
 
 ### Backend Setup
 
@@ -56,7 +74,6 @@ A full-stack web application demonstrating a basic integration between a C# Web 
    The API will typically run on `http://localhost:5194` (or as configured in your launchSettings.json).
 
 ### Frontend Setup
-
 1. **Navigate to the Frontend Folder:**
 
        cd FrontendReact
@@ -72,28 +89,78 @@ A full-stack web application demonstrating a basic integration between a C# Web 
 4. **Access the App:**  
    The React application will run on `http://localhost:5173/`.
 
-## CORS Configuration
-
-To allow the React app to communicate with the C# backend, CORS is configured in the backend.
-
-## API Endpoints
-
-### GET /api/messages
-
-- **Description:** Retrieves all messages.
-- **Implementation:** Handled by the `MessagesController`.
-- **Usage:** Triggered when the "Fetch Data from Backend" button in the frontend is clicked.
-- **Response:** A JSON array of message objects.
+---
 
 ## Usage
 
-1. **Run the Backend API** by following the Backend Setup instructions.
-2. **Start the Frontend App** using the Frontend Setup steps.
-3. **Interact with the Application:**
-   - Open your browser and navigate to `http://localhost:5173/`.
-   - Click the "Get All Messages" button to send a GET request to the `/api/messages` endpoint.
-   - View the response (the list of messages) rendered in the frontend.
+After setting up both the backend and frontend, the application can be accessed at [http://localhost:5173](http://localhost:5173).
+
+- **API Documentation:**  
+  View the interactive Swagger documentation at [http://localhost:5194/swagger/](http://localhost:5194/swagger/).
+
+### CRUD Operation Buttons Explained
+
+The UI includes buttons that trigger asynchronous API calls using the `fetch` API. The following endpoints are called when clicking the buttons:
+
+- **Get:**  
+  Retrieves a single message asynchronously.  
+  **Example URL:** `http://localhost:5194/api/messages/1`  
+  *Use this button to view detailed information for a specific message.*
+
+- **Get All:**  
+  Fetches and displays all messages asynchronously from the in-memory data service.  
+  **Example URL:** `http://localhost:5194/api/messages/`  
+  *Click this button to view a complete list of messages.*
+
+- **Add:**  
+  Creates a new message asynchronously by sending the provided details with a POST request.  
+  **Example URL:** `http://localhost:5194/api/messages/`  
+  *Use this button to add a new message through form submission.*
+
+- **Update:**  
+  Modifies an existing message asynchronously by sending updated data with a PUT request.  
+  **Example URL:** `http://localhost:5194/api/messages/1`  
+  *Select a message, update its content, and click this button to save changes.*
+
+- **Delete:**  
+  Removes a message asynchronously from the in-memory data service by sending a DELETE request.  
+  **Example URL:** `http://localhost:5194/api/messages/1`  
+  *Use this button to delete a message permanently. A confirmation prompt may be shown to prevent accidental deletion.*
+
+Each button operation is handled asynchronously to ensure smooth and responsive interactions.
+
+---
+
+## Technologies Used
+
+- **Backend:**
+  - **C# & .NET 8.0:** For building the RESTful API.
+  - **MVC Architecture:** Structures the backend into Models, Views, and Controllers.
+  - **In-Memory Data Service:** Offers a simple and fast data store for development and demo purposes.
+  - **CORS Configuration:** Enables secure cross-origin requests.
+  - **Swagger:** Provides interactive API documentation and testing tools.
+
+- **Frontend:**
+  - **React:** For building the dynamic user interface.
+  - **TypeScript:** Enhances code reliability with static typing.
+  - **Vite:** Powers fast development and optimized builds.
+  - **Custom useApi Hook:** Located in `useApi.ts`, it handles asynchronous API calls using `fetch`.
+  - **useState:** Manages state within the React components (e.g., in `App.tsx`).
+
+---
+
+## Project Structure
+
+*(Project structure details will be added later.)*
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+## Contributing
+
+*(Content coming soon.)*
