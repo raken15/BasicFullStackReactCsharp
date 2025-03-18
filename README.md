@@ -43,6 +43,7 @@ CORS is configured to ensure secure cross-origin communication, and Swagger is u
 - **CORS Enabled:** Ensures secure cross-origin requests between the client and server.
 - **Swagger Documentation:** Offers interactive API documentation to facilitate testing and development.
 - **Vite-Powered Frontend:** Enables rapid development, hot module replacement, and optimized builds.
+- **Exception Filter and Error handling:** used exceptions `throws`, `try-catch`, and exception filter to handle the exceptions and unexpected behavior in the code.
 
 ---
 
@@ -115,17 +116,17 @@ The UI includes buttons that trigger asynchronous API calls using the `fetch` AP
 - **Add:**  
   Creates a new message asynchronously by sending the provided details with a POST request.  
   **Example URL:** `http://localhost:5194/api/messages/`  
-  *Use this button to add a new message through form submission.*
+  *Enter message body and use this button to add a new message*
 
 - **Update:**  
   Modifies an existing message asynchronously by sending updated data with a PUT request.  
   **Example URL:** `http://localhost:5194/api/messages/1`  
-  *Select a message, update its content, and click this button to save changes.*
+  *Enter message id and message body, and click this button to update the message.*
 
 - **Delete:**  
   Removes a message asynchronously from the in-memory data service by sending a DELETE request.  
   **Example URL:** `http://localhost:5194/api/messages/1`  
-  *Use this button to delete a message permanently. A confirmation prompt may be shown to prevent accidental deletion.*
+  *Enter message id and use this button to delete the message permanently.
 
 Each button operation is handled asynchronously to ensure smooth and responsive interactions.
 
